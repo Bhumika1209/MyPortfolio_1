@@ -346,7 +346,7 @@
       </div>
       <div class="headshot-wrap">
         <div class="headshot-ring">
-          <img src="assets/headshot.jpg" alt="Bhumika Sisodiya - Software Engineer">
+          <img id="headshot-img" src="assets/headshot.jpg" alt="Bhumika Sisodiya - Software Engineer" onerror="handleImageError(this)">
         </div>
         <div class="headshot-cap">Bhumika Sisodiya</div>
       </div>
@@ -527,6 +527,24 @@
 </button>
 
 <script>
+  // Smart Fallback for Profile Image
+  function handleImageError(img) {
+    const fallbacks = [
+      'assets/profile.jpg',
+      'assets/photo.jpg',
+      'assets/headshot.png',
+      'assets/profile.png',
+      'headshot.jpg',
+      'profile.jpg',
+      'photo.jpg'
+    ];
+    let currentIdx = parseInt(img.getAttribute('data-fallback-idx') || '0');
+    if (currentIdx < fallbacks.length) {
+      img.setAttribute('data-fallback-idx', currentIdx + 1);
+      img.src = fallbacks[currentIdx];
+    }
+  }
+
   // Reading Progress Bar
   window.addEventListener('scroll', () => {
     const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
